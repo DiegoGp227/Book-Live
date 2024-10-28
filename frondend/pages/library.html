@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../assets/logito.jpeg" type="image/x-icon" />
+    <title>library</title>
+    <link rel="stylesheet" href="../styles/library.css" />
+    <link rel="stylesheet" href="../components/css/nav.css" />
+    <link rel="stylesheet" href="../styles/global.css" />
+    <link rel="stylesheet" href="../components/css/menus.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="logo">
+        <a href="index.html">
+          <img
+            src="/frondend/assets/WhatsApp_Image_2024-10-22_at_12.24.21_PM-removebg-preview.png"
+            alt="Logo GameScore"
+          />
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li id="singIn"><a href="home.html">Home</a></li>
+        <li id="singIn"><a href="library.html">Library</a></li>
+        <li id="singIn"><a href="wishlist.html">wishlist</a></li>
+      </ul>
+      <div class="menu">
+        <a href="../pages/perfil.html">McDiego27</a>
+        <button onclick="profile()" id="profileButton">
+          <img src="../assets/butters.webp" alt="Menu Icon" id="user" />
+        </button>
+      </div>
+    </nav>
+    <section>
+      <div id="expandableProfile">
+        <div id="one">
+          <img src="/Frontend/assets/img/nav/Cartman.webp" alt="" />
+          <a href="perfil.html">McDiego27</a>
+        </div>
+        <hr />
+        <div>
+          <p>estadisticas</p>
+          <p>kilometros totales</p>
+        </div>
+        <hr />
+        <div>actividades recientes</div>
+        <div id="divEnd">
+          <div id="perfilButton">
+            <button>
+              <a href="../pages/perfil.html">Ir a perfil</a>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <main id="cards">
+      <!-- <div class="target">
+        <div class="img-target">
+          <img
+            src="https://www.libreriacasatomada.com/imagenes/9789583/978958306374.GIF"
+            alt=""
+          />
+        </div>
+        <div class="main-target">
+          <h3>Narraciones Extraordinarias</h3>
+          <h3>Edgar Alan Poe</h3>
+        </div>
+      </div> -->
+      <!-- <div class="target">
+        <div class="img-target">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/601b294f99c3994216085eb6/1612418858187-E1T28B6I3C95X08SQN6Z/juegos-del-hambre.jpg?fo"
+            alt=""
+          />
+        </div>
+        <div class="main-target">
+          <h3>Los juegos del hambre</h3>
+          <h3>Suzanne Collins</h3>
+        </div>
+      </div> -->
+    </main>
+    <div id="divNewActivity">
+      <button onclick="newActivityButton()" id="newActivityButton">
+        NEW BOOK
+      </button>
+    </div>
+    <div id="menuForm">
+      <div id="formTitle">
+        <h2>NEW BOOK</h2>
+      </div>
+      <div id="formMain">
+        <form id="formActivity">
+          <label for="bookName">Book Name</label>
+          <input type="text" id="bookName" required />
+
+          <label for="bookAuthor">Author</label>
+          <input type="text" id="bookAuthor" required />
+
+          <label for="bookCalification">Calification</label>
+          <input type="number" id="bookCalification" required />
+
+          <label for="bookimg">Url img</label>
+          <input type="text" id="bookimg" required />
+
+          <label for="bookCategory">Category</label>
+          <input type="text" id="bookCategory" required />
+
+          <label for="bookDescription">Description</label>
+          <input type="text" id="bookDescription" required />
+
+          <button type="submit" id="sendButtomForm">Send</button>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script src="../components/js/nemudeploy.js"></script>
+  <script src="../scripts/library.js"></script>
+  <!-- <script src="/frondend/scripts/funtion.js"></script> -->
+</html>

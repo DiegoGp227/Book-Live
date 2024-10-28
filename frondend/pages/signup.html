@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/logito.jpeg" type="image/x-icon">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../styles/signup.css">
+    <link rel="stylesheet" href="../styles/nav.css">
+    <link rel="stylesheet" href="../styles/global.css">
+</head>
+<body>
+    <nav class="nav">
+        <div class="logo">
+            <a href="index.html">
+                <img src="/frondend/assets/WhatsApp Image 2024-10-22 at 12.24.21 PM.jpeg" alt="Logo GameScore">
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li id="singIn"><a href="index.html">Home</a></li>
+            <li id="singIn"><a href="library.html">Library</a></li>
+            <li id="singIn"><a href="wishlist.html">wishlist</a></li>
+        </ul>
+        <div class="menu">
+            <a href="../pages/perfil.html">McDiego27</a>
+            <button onclick="profile()" id="menu-button">
+                <img src="../assets/butters.webp" alt="Menu Icon" id="user">
+            </button>
+        </div>
+    </nav>
+    <main>
+        <div class="login-container">
+            <h2>sign up</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label>
+                <input type="name" id="username" placeholder="Enter your name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+
+                <button type="submit" id="buttonSendData">Register</button>
+            </form>
+        </div>
+    </main>
+<script src="../scripts/signup.js"></script>
+</body>
+</html>
