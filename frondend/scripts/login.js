@@ -30,3 +30,4 @@ buttonSendCredentials.addEventListener("click", async (event) =>{
     await getDataLogIn();
     let form = document.getElementById("loginForm").reset();
 })
+

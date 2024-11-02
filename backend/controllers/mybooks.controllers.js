@@ -6,7 +6,7 @@ const getMyBooks = async (req, res) => {
         let userId
         if (authHeader) {
             userId = authHeader.split(' ')[1];
-            console.log(`El ID de usuario es: ${userId}`);
+            // console.log(`El ID de usuario es: ${userId}`);
         }
 
         if (!userId) {
@@ -17,11 +17,10 @@ const getMyBooks = async (req, res) => {
 
         const query = 'SELECT * FROM books WHERE user_id = ?';
         const [data] = await db.query(query, [userId]);
-        // console.log("Datos obtenidos:", data);
 
         res.json(data);
     } catch (error) {
-        console.error("Error en la consulta:", error); // Agregar detalle del error
+        console.error("Error en la consulta:", error);
         return res.status(500).json({
             message: "something went wrong"
         });

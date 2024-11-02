@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../components/css/nav.css" />
     <link rel="stylesheet" href="../styles/global.css" />
     <link rel="stylesheet" href="../components/css/menus.css" />
+    <script src="../scripts/validation.js"></script>
   </head>
   <body>
     <nav class="nav">
@@ -26,30 +27,32 @@
         <li id="singIn"><a href="wishlist.html">wishlist</a></li>
       </ul>
       <div class="menu">
-        <a href="../pages/perfil.html">McDiego27</a>
+        <div class="divUserName">
+          <a href="../pages/profile.html" id="userNameNav"></a>
+        </div>
         <button onclick="profile()" id="profileButton">
-          <img src="../assets/butters.webp" alt="Menu Icon" id="user" />
+          <img src="../assets/jake leyendo.jpg" alt="" id="user" />
         </button>
       </div>
     </nav>
     <section>
       <div id="expandableProfile">
         <div id="one">
-          <img src="/Frontend/assets/img/nav/Cartman.webp" alt="" />
-          <a href="perfil.html">McDiego27</a>
+          <img src="../assets/jake leyendo.jpg" alt="" />
+          <div class="divUserName">
+            <a href="profile.html"></a>
+          </div>
         </div>
         <hr />
-        <div>
-          <p>estadisticas</p>
-          <p>kilometros totales</p>
+        <div id="userInfo">
+
         </div>
         <hr />
-        <div>actividades recientes</div>
+
         <div id="divEnd">
-          <div id="perfilButton">
-            <button>
-              <a href="../pages/perfil.html">Ir a perfil</a>
-            </button>
+          <div id="divPerfilButton">
+            <button id="exitButton">EXIT TO PROFILE</button>
+            <button id="perfilButton"><a href="../pages/perfil.html">GO TO PROFILE</a></button>
           </div>
         </div>
       </div>

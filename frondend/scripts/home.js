@@ -15,8 +15,27 @@ document.addEventListener("click", function (e) {
 
 });
 
-// Muestra todas las cookies en la consola
+//// Add userName 
+function getCookieValue(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        return decodeURIComponent(parts.pop().split(';').shift());
+    }
+}
 
+const userName = getCookieValue("userName");
 
+function addProfileInfo() {
+    let divUserNameElements = document.getElementsByClassName("divUserName");
 
-console.log(document.cookie.id);
+    for (let i = 0; i < divUserNameElements.length; i++) {
+        const divUserName = divUserNameElements[i];
+        divUserName.innerHTML = `<a href="profile.html">${userName}</a>`;
+    }
+}
+
+// Restante de tu código
+document.addEventListener("DOMContentLoaded", function () {
+    addProfileInfo();
+});

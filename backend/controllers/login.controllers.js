@@ -8,7 +8,6 @@ dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY; 
 const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION; 
 
-
 const login = async (req, res) => {
     const { email, password } = req.body;
 
@@ -33,13 +32,25 @@ const login = async (req, res) => {
 
             // Establecer cookies
             res.cookie('token', token, {
-                httpOnly: false, // Cambiar a true si no necesitas acceso desde JS
-                secure: process.env.NODE_ENV === 'production', // Solo se envía a través de HTTPS en producción
+                httpOnly: false, 
+                secure: process.env.NODE_ENV === 'production',
                 maxAge: 14400000 // 4 horas en milisegundos
             });
 
             res.cookie('userId', user[0].id, {
-                httpOnly: false, // Cambiar a true si no necesitas acceso desde JS
+                httpOnly: false,
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 14400000 // 4 horas en milisegundos
+            });
+
+            res.cookie('userName', user[0].username, {
+                httpOnly: false, // Mantener en false si necesitas acceso desde JS
+                secure: process.env.NODE_ENV === 'production',
+                maxAge: 14400000 // 4 horas en milisegundos
+            });
+
+            res.cookie('userEmail', user[0].email, { // Cambiado de userId a userEmail
+                httpOnly: false, // Mantener en false si necesitas acceso desde JS
                 secure: process.env.NODE_ENV === 'production',
                 maxAge: 14400000 // 4 horas en milisegundos
             });
@@ -54,6 +65,7 @@ const login = async (req, res) => {
         return res.status(500).json({ message: 'Internal server error' }); // Manejo de errores mejorado
     }
 };
+
 
 
 export default login;

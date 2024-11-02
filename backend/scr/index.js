@@ -8,7 +8,7 @@ const app = express();
 
 
 const corsConfiguration = {
-    origin: 'http://localhost:5501', 
+    origin: 'http://localhost:5500', 
     credentials: true, 
 };
 
@@ -27,6 +27,5 @@ app.use((req, res, next) => {
 
 // Server running
 const port = 5000
-app.listen(port)
-console.log(`Hello world, i am listening on port ${port}`)
-
+app.listen(port);
+console.log(`Hello world, i am listening on port ${port}`);

@@ -71,9 +71,7 @@ function addCardsWishlist(cardsBooks) {
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    getWishlist()
-})
+
 
 //// Add new dates
 function getDatesForm() {
@@ -108,4 +106,30 @@ const sendButtomForm = document.getElementById("sendButtomForm");
 
 sendButtomForm.addEventListener("click", async (event) => {
     getDatesForm(event);
+});
+
+//// Add userName 
+function getCookieValue(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        return decodeURIComponent(parts.pop().split(';').shift());
+    }
+}
+
+const userName = getCookieValue("userName");
+
+function addProfileInfo() {
+    let divUserNameElements = document.getElementsByClassName("divUserName");
+
+    for (let i = 0; i < divUserNameElements.length; i++) {
+        const divUserName = divUserNameElements[i];
+        divUserName.innerHTML = `<a href="profile.html">${userName}</a>`;
+    }
+}
+
+// Restante de tu código
+document.addEventListener("DOMContentLoaded", function () {
+    getWishlist()
+    addProfileInfo();
 });
