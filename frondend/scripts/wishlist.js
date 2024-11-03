@@ -1,47 +1,29 @@
-// Handles closing and opening expandable menu
-function profile() {
-    const expandableProfile = document.getElementById("expandableProfile");
-    expandableProfile.style.display = (expandableProfile.style.display === "none" || expandableProfile.style.display === "") ? "flex" : "none";
-}
-
-document.addEventListener("click", function (e) {
-    const expandableProfile = document.getElementById("expandableProfile");
-
-    if (expandableProfile.style.display === "flex" && 
-        !expandableProfile.contains(e.target) && 
-        !e.target.closest('#profileButton')) {
-        expandableProfile.style.display = "none";
-    }
-
-});
-
-
-//// Get the wish list book cards
-let cardsBooks
+// Get the wish list book cards
+let cardsBooks;
+let dataCardsGlobal;
 
 function getWishlist() {
     const userId = getCookieValue('userId');
-    console.log(userId)
     fetch("http://localhost:5000/api/mywishlist", {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
-             'Authorization': `Bearer ${userId}`
+            'Authorization': `Bearer ${userId}`
         },
     })
-        .then(response => {
-            if (!response.ok) {
-                console.log("Network response was not ok")
-            }
-            return response.json();
-        })
-        .then(data => {
-            const cardsBooks = data;
-            addCardsWishlist(cardsBooks);
-        })
-        .catch(error => {
-            console.error('Error al obtener los datos:', error);
-        });
+    .then(response => {
+        if (!response.ok) {
+            console.log("Network response was not ok");
+        }
+        return response.json();
+    })
+    .then(data => {
+        cardsBooks = data;
+        addCardsWishlist(cardsBooks);
+    })
+    .catch(error => {
+        console.error('Error al obtener los datos:', error);
+    });
 }
 
 function getCookieValue(name) {
@@ -50,30 +32,50 @@ function getCookieValue(name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-// Recuperar el valor de "session_token"
-
+////Add menuInfo
 function addCardsWishlist(cardsBooks) {
-    let cards = document.getElementById("cards")
+    let cards = document.getElementById("cards");
+    let cardId = 0
     cards.innerHTML = "";
-    cardsBooks.forEach(item => {
+    cardsBooks.forEach((item) => {
         cards.innerHTML += `
-        <div class="target">
+        <div class="target" data-cardId="${cardId}">
             <div class="img-target">
-                <img src="${item.cover_image}"alt=""/>
+                <img src="${item.cover_image}" alt=""/>
             </div>
             <div class="main-target">
                 <h3>${item.name}</h3>
                 <h3>${item.author}</h3>
             </div>
+            <button id="moreInfoButton" class="openMoreInfo" onclick="openMoreInfo(), insertInfo(${cardId});">MORE INFO</button>
         </div>
-    `
-    })
+        `;
+        cardId ++;
+    });
 }
 
 
+function insertInfo(id) {
+    let infoCards = document.getElementById("infoCards");
+    infoCards.innerHTML = "";
+        infoCards.innerHTML += `
+            <div id="infoCardsTittle">
+                <h3>${cardsBooks[id].name}</h3>
+            </div>
+            <div id="mainCards">
+                <p>Author: ${cardsBooks[id].author}</p>
+                <p>Price: ${cardsBooks[id].price}</p>
+                <p>
+                    Link:
+                    <a href="${cardsBooks[id].link}" target="_blank">${cardsBooks[id].link}</a>
+                </p>
+            </div>
+            <button id="deleteCard">DELETE</button>
+        `;
 
+}
 
-//// Add new dates
+//// Add new cards
 function getDatesForm() {
     const bookName = document.getElementById("bookName").value;
     const bookAuthor = document.getElementById("bookAuthor").value;
@@ -119,17 +121,59 @@ function getCookieValue(name) {
 
 const userName = getCookieValue("userName");
 
-function addProfileInfo() {
-    let divUserNameElements = document.getElementsByClassName("divUserName");
+function getMyBookAccount() {
+    const userId = getCookieValue("userId");
+    fetch("http://localhost:5000/api/countingdata", {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userId}`
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.log("Network response was not ok")
+            }
+            return response.json();
+        })
+        .then(data => {
+            var bookCount = data.bookCount;
+            var wishlistCount = data.wishlistCount
+            addProfileInfo(bookCount, wishlistCount)
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos:', error);
+        });
+};
 
+function addProfileInfo(bookCount, wishlistCount) {
+    let divUserNameElements = document.getElementsByClassName("divUserName");
+    let userInfo = document.getElementById("userInfo")
+    userInfo.innerHTML = "";
+    userInfo.innerHTML += `
+        <div id="userInfo">
+          <h3>Statistics</h3>
+          <p>Total books read: ${bookCount}</p>
+          <p>Total books in wishlist: ${wishlistCount}</p>
+        </div>
+    `
     for (let i = 0; i < divUserNameElements.length; i++) {
         const divUserName = divUserNameElements[i];
         divUserName.innerHTML = `<a href="profile.html">${userName}</a>`;
     }
+};
+
+function logout() {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+    window.location.href = "../pages/login.html";
 }
 
 // Restante de tu código
 document.addEventListener("DOMContentLoaded", function () {
-    getWishlist()
-    addProfileInfo();
+    getWishlist();
+    getMyBookAccount();
 });

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../components/css/nav.css" />
     <link rel="stylesheet" href="../styles/global.css" />
     <link rel="stylesheet" href="../components/css/menus.css" />
+    <link rel="stylesheet" href="../components/css/moreinfo.css" />
     <script src="../scripts/validation.js"></script>
   </head>
   <body>
@@ -43,46 +44,24 @@
             <a href="profile.html"></a>
           </div>
         </div>
-        <hr />
-        <div id="userInfo">
 
-        </div>
+        <hr />
+        <div id="userInfo"></div>
         <hr />
 
         <div id="divEnd">
           <div id="divPerfilButton">
-            <button id="exitButton">EXIT TO PROFILE</button>
-            <button id="perfilButton"><a href="../pages/perfil.html">GO TO PROFILE</a></button>
+            <button id="exitButton" onclick="logout()">EXIT TO PROFILE</button>
+            <button id="perfilButton">
+              <a href="../pages/perfil.html">GO TO PROFILE</a>
+            </button>
           </div>
         </div>
       </div>
     </section>
-    <main id="cards">
-      <!-- <div class="target">
-        <div class="img-target">
-          <img
-            src="https://www.libreriacasatomada.com/imagenes/9789583/978958306374.GIF"
-            alt=""
-          />
-        </div>
-        <div class="main-target">
-          <h3>Narraciones Extraordinarias</h3>
-          <h3>Edgar Alan Poe</h3>
-        </div>
-      </div> -->
-      <!-- <div class="target">
-        <div class="img-target">
-          <img
-            src="https://images.squarespace-cdn.com/content/v1/601b294f99c3994216085eb6/1612418858187-E1T28B6I3C95X08SQN6Z/juegos-del-hambre.jpg?fo"
-            alt=""
-          />
-        </div>
-        <div class="main-target">
-          <h3>Los juegos del hambre</h3>
-          <h3>Suzanne Collins</h3>
-        </div>
-      </div> -->
-    </main>
+    <main id="cards"></main>
+    <div id="infoCards">
+    </div>
     <div id="divNewActivity">
       <button onclick="newActivityButton()" id="newActivityButton">
         NEW BOOK

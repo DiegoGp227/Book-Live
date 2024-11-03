@@ -26,16 +26,57 @@ function getCookieValue(name) {
 
 const userName = getCookieValue("userName");
 
-function addProfileInfo() {
-    let divUserNameElements = document.getElementsByClassName("divUserName");
+function getMyBookAccount() {
+    const userId = getCookieValue("userId");
+    fetch("http://localhost:5000/api/countingdata", {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userId}`
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                console.log("Network response was not ok")
+            }
+            return response.json();
+        })
+        .then(data => {
+            var bookCount = data.bookCount;
+            var wishlistCount = data.wishlistCount
+            addProfileInfo(bookCount,wishlistCount)
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos:', error);
+        });
+};
 
+function addProfileInfo(bookCount,wishlistCount) {
+    let divUserNameElements = document.getElementsByClassName("divUserName");
+    let userInfo = document.getElementById("userInfo")
+    userInfo.innerHTML = "";
+    userInfo.innerHTML += `
+        <div id="userInfo">
+          <h3>Statistics</h3>
+          <p>Total books read: ${bookCount}</p>
+          <p>Total books in wishlist: ${wishlistCount}</p>
+        </div>
+    `
     for (let i = 0; i < divUserNameElements.length; i++) {
         const divUserName = divUserNameElements[i];
         divUserName.innerHTML = `<a href="profile.html">${userName}</a>`;
     }
+};
+
+function logout() {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+    window.location.href = "../pages/login.html";
 }
 
-// Restante de tu código
 document.addEventListener("DOMContentLoaded", function () {
-    addProfileInfo();
+    getMyBookAccount();
 });

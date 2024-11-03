@@ -8,8 +8,22 @@ body {
     background-color:var(--background-color);
 }
 
-/*Button*/
 
+.openMoreInfo {
+    cursor: pointer;
+    background-color: #10cfc3;
+    border: none;
+    border-radius: 5px;
+    margin-top: auto;
+    box-shadow: 2px 2px 10px 5px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 26px;
+  }
+  
+  .openMoreInfo:hover {
+    background-color: var(--hover-color);
+  }
+/*Button*/
 #divNewActivity{
     display: flex;
     justify-content: center;

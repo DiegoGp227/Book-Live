@@ -24,7 +24,7 @@ function getBooks() {
             return response.json();
         })
         .then(data => {
-            const cardsBooks = data;
+            cardsBooks = data;
             addCardsBooks(cardsBooks);
         })
         .catch(error => {
@@ -36,6 +36,7 @@ function getBooks() {
 
 function addCardsBooks(cardsBooks) {
     let cards = document.getElementById("cards")
+    let cardId = 0;
     cards.innerHTML = "";
     cardsBooks.forEach(item => {
         cards.innerHTML += `
@@ -47,10 +48,51 @@ function addCardsBooks(cardsBooks) {
                 <h3>${item.title}</h3>
                 <h3>${item.author}</h3>
             </div>
+            <button id="moreInfoButton" class="openMoreInfo" onclick="openMoreInfo(), insertInfo(${cardId});">MORE INFO</button>
         </div>
     `
+        cardId++;
     })
 }
+
+function insertInfo(id) {
+    let infoCards = document.getElementById("infoCards");
+    infoCards.innerHTML = "";
+    infoCards.innerHTML += `
+        <div id="infoCardsTittle">
+            <h3>${cardsBooks[id].title}</h3>
+        </div>
+        <div id="mainCards">
+            <p>Author: ${cardsBooks[id].author}</p>
+            <p>Calification: ${cardsBooks[id].rating}</p>
+            <p>category: ${cardsBooks[id].category}</p>
+            <p>description: ${cardsBooks[id].description}</p>
+        </div>
+        <button id="deleteCard" onclick="deleteCard(${cardsBooks[id].id})">DELETE</button>
+        `;
+}
+
+function deleteCard(id) {
+    fetch (`http://localhost:5000/api/mybooks/${id}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })  .then(response => {
+        if (!response.ok) {
+            throw new Error("Error al eliminar la actividad");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Actividad eliminada:", data); 
+        window.location.reload()      
+    })
+    .catch(error => {
+        console.error("Error al intentar eliminar la actividad:", error);
+    });
+}
+
 
 //// Add new dates
 function getDatesForm() {
@@ -121,19 +163,19 @@ function getMyBookAccount() {
         .then(data => {
             var bookCount = data.bookCount;
             var wishlistCount = data.wishlistCount
-            addProfileInfo(bookCount,wishlistCount)
+            addProfileInfo(bookCount, wishlistCount)
         })
         .catch(error => {
             console.error('Error al obtener los datos:', error);
         });
 };
 
-function addProfileInfo(bookCount,wishlistCount) {
+function addProfileInfo(bookCount, wishlistCount) {
     let divUserNameElements = document.getElementsByClassName("divUserName");
     let userInfo = document.getElementById("userInfo")
     userInfo.innerHTML = "";
     userInfo.innerHTML += `
-Ñ        <div id="userInfo">
+        <div id="userInfo">
           <h3>Statistics</h3>
           <p>Total books read: ${bookCount}</p>
           <p>Total books in wishlist: ${wishlistCount}</p>
@@ -144,6 +186,15 @@ function addProfileInfo(bookCount,wishlistCount) {
         divUserName.innerHTML = `<a href="profile.html">${userName}</a>`;
     }
 };
+
+function logout() {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "userEmail=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+    window.location.href = "../pages/login.html";
+}
 
 // Restante de tu código
 document.addEventListener("DOMContentLoaded", function () {

@@ -30,7 +30,7 @@ const getMyBooks = async (req, res) => {
 
 const postMyBooks = async (req, res) => {
     console.log(req.body)
-    try{
+    try {
         const { userid, bookName, bookAuthor, bookCalification, bookimg, bookCategory, bookDescription } = req.body;
         const rows = await db.query(
             "INSERT INTO books ( user_id, title, author, cover_image, rating, category, description) VALUES ( ?, ?, ?, ?, ?, ?, ?)", [userid, bookName, bookAuthor, bookimg, bookCalification, bookCategory, bookDescription]
@@ -54,4 +54,25 @@ const postMyBooks = async (req, res) => {
     }
 }
 
-export { getMyBooks, postMyBooks };
+const deleteMyBooks = async (req, res) => {
+    try {
+        const bookId = req.params.id;
+        const [result] = await db.query(
+            "DELETE FROM books WHERE id = ?",
+            [bookId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Libro no encontrado" });
+        }
+
+        // Si la eliminación fue exitosa
+        res.status(200).json({ message: "Libro eliminado con éxito" });
+    } catch (error) {
+        console.error('Error al eliminar el libro:', error);
+        res.status(500).json({ message: "Error al eliminar el libro", error });
+    }
+}
+
+
+export { getMyBooks, postMyBooks, deleteMyBooks };

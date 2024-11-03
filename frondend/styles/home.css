@@ -1,9 +1,60 @@
 * {
-    padding: 0;
-    margin: 0;
-    font-family: "Noto Sans Mono", monospace;
+  padding: 0;
+  margin: 0;
+  font-family: "Noto Sans Mono", monospace;
 }
 
 body {
-    background-color: #5d6575;
+  background-color: #d5d9df;
+}
+
+#landingPage {
+  display: flex;
+  flex-direction: column;
+}
+
+.text {
+  width: 50%;
+  width: 50%;
+  color: black;
+  font-size: 35px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  align-items: center; /* Alinea verticalmente al centro */
+  text-align: center; /* Asegura que el texto dentro se centre */
+}
+
+.buttonRedirect {
+  cursor: pointer;
+  background-color: #10cfc3;
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  box-shadow: 2px 2px 10px 5px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  height: 26px;
+}
+
+.buttonRedirect:hover {
+  background-color: var(--hover-color);
+}
+
+.buttonRedirect a {
+      text-decoration: none;
+}
+
+.img {
+  width: 50%;
+  height: auto;
+}
+
+.img img {
+  width: 100%;
 }

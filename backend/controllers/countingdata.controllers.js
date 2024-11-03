@@ -19,7 +19,6 @@ const getCountingData = async (req, res) => {
 
         const queryBooks = 'SELECT * FROM books WHERE user_id = ?';
         const [dataBooks] = await db.query(queryBooks, [userId]);
-        console.log("Datos obtenidos:", dataBooks);
 
 
         if (!dataBooks || dataBooks.length === 0) {
@@ -30,7 +29,6 @@ const getCountingData = async (req, res) => {
 
         const queryWishlist = 'SELECT * FROM wishlist WHERE user_id = ?';
         const [dataWishlist] = await db.query(queryWishlist, [userId]);
-        console.log("Datos obtenidos:", dataWishlist);
 
         if (!dataWishlist || dataWishlist.length === 0) {
             console.log("No se encontraron libros para este usuario.");

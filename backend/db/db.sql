@@ -26,7 +26,6 @@ CREATE TABLE books (
     FOREIGN KEY (user_id) REFERENCES users(id)       -- Llave foránea que referencia a la tabla users
 );
 
-
 -- Table to store wishlist items
 CREATE TABLE wishlist (
     id INT AUTO_INCREMENT PRIMARY KEY,

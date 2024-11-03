@@ -17,7 +17,6 @@ const getMyWishlist = async (req, res) => {
 
         const query = 'SELECT * FROM wishlist WHERE user_id = ?';
         const [data] = await db.query(query, [userId]);
-        // console.log("Datos obtenidos:", data);
 
         res.json(data);
     } catch (error) {
