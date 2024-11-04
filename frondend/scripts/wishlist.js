@@ -11,19 +11,19 @@ function getWishlist() {
             'Authorization': `Bearer ${userId}`
         },
     })
-    .then(response => {
-        if (!response.ok) {
-            console.log("Network response was not ok");
-        }
-        return response.json();
-    })
-    .then(data => {
-        cardsBooks = data;
-        addCardsWishlist(cardsBooks);
-    })
-    .catch(error => {
-        console.error('Error al obtener los datos:', error);
-    });
+        .then(response => {
+            if (!response.ok) {
+                console.log("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            cardsBooks = data;
+            addCardsWishlist(cardsBooks);
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos:', error);
+        });
 }
 
 function getCookieValue(name) {
@@ -50,7 +50,7 @@ function addCardsWishlist(cardsBooks) {
             <button id="moreInfoButton" class="openMoreInfo" onclick="openMoreInfo(), insertInfo(${cardId});">MORE INFO</button>
         </div>
         `;
-        cardId ++;
+        cardId++;
     });
 }
 
@@ -58,21 +58,49 @@ function addCardsWishlist(cardsBooks) {
 function insertInfo(id) {
     let infoCards = document.getElementById("infoCards");
     infoCards.innerHTML = "";
-        infoCards.innerHTML += `
-            <div id="infoCardsTittle">
-                <h3>${cardsBooks[id].name}</h3>
-            </div>
-            <div id="mainCards">
-                <p>Author: ${cardsBooks[id].author}</p>
-                <p>Price: ${cardsBooks[id].price}</p>
-                <p>
-                    Link:
-                    <a href="${cardsBooks[id].link}" target="_blank">${cardsBooks[id].link}</a>
-                </p>
-            </div>
-            <button id="deleteCard">DELETE</button>
+    infoCards.innerHTML += `
+    <div id="infoCardsTittle">
+      <h3>${cardsBooks[id].name}</h3>
+    </div>
+    <div id="mainCards">
+      <p>Author: ${cardsBooks[id].author}</p>
+      <p>Price: ${cardsBooks[id].price}</p>
+      <p>
+        Link:
+        <a href="${cardsBooks[id].link}" target="_blank"
+          >${cardsBooks[id].link}</a
+        >
+      </p>
+    </div>
+    <div class="buttonsMoreInfo">
+        <button id="deleteButton" onclick="deleteCard(${cardsBooks[id].id})">DELETE</button>
+          <button id="editButton" onclick="editActivityButton()">
+            <img id="editButtonImg" src="../assets/Svgs/pencil.svg" alt="">
+        </button>
+    </div>
         `;
 
+}
+
+function deleteCard(id) {
+    fetch (`http://localhost:5000/api/mywishlist/${id}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })  .then(response => {
+        if (!response.ok) {
+            throw new Error("Error al eliminar la actividad");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Actividad eliminada:", data); 
+        window.location.reload()      
+    })
+    .catch(error => {
+        console.error("Error al intentar eliminar la actividad:", error);
+    });
 }
 
 //// Add new cards

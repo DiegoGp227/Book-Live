@@ -68,7 +68,12 @@ function insertInfo(id) {
             <p>category: ${cardsBooks[id].category}</p>
             <p>description: ${cardsBooks[id].description}</p>
         </div>
-        <button id="deleteCard" onclick="deleteCard(${cardsBooks[id].id})">DELETE</button>
+        <div class="buttonsMoreInfo">
+            <button id="deleteButton" onclick="deleteCard(${cardsBooks[id].id})">DELETE</button>
+            <button id="editButton">
+                <img id="editButtonImg" src="../assets/Svgs/pencil.svg" alt="">
+            </button>
+        </div>
         `;
 }
 

@@ -139,7 +139,7 @@ section {
 
 
 /*Menu Form*/
-#menuForm {
+#menuForm  {
     display: none;
     flex-direction: column;
     background-color: var(--black-color);
@@ -191,7 +191,7 @@ select {
 #newActivityButton {
     width: 220px;
     height: 40px;
-    margin: 20px 0px 20px 20px;
+    margin: 20px 0px 20px 0px;
     cursor: pointer;
     background-color: #10cfc3;
     border: none;
@@ -201,4 +201,80 @@ select {
 
 #newActivityButton:hover {
     background-color: var(--hover-color);
+}
+
+/*MORE INFO MENU*/
+#infoCards {
+    background-color: var(--black-color);
+    color: var(--white-color);
+    border: 1px solid white;
+    position: absolute;
+    margin: auto;
+    min-height: 300px;
+    min-width: 700px;
+    width: auto;
+    height: auto;
+    display: flex;
+    border-radius: 5px;
+    top: 50%;
+    left: 50%;
+    padding: 10px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    display: none; 
+}
+
+#mainCards{
+    margin-bottom: 10px;
+}
+#infoCards p {
+    font-size: 25px;
+}
+
+#infoCardsTittle {
+    display: flex;
+    justify-content: center;
+}
+
+#infoCardsTittle h3 {
+    font-size: 40px;
+}
+
+.buttonsMoreInfo{
+    display: flex;
+    width: 100%;
+    margin-top: auto;
+}
+
+#deleteButton{
+    width: 95%;
+    height: 40px;
+    cursor: pointer;
+    background-color: #a50000;
+    border: none;
+    margin-top: auto;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+#deleteButton:hover{
+    background-color: #fd0606;
+}
+
+#editButton{
+    width: 5%;
+    height: 40px;
+    border-radius: 5px;
+    margin-left: 5px;
+    background-color: #000000;
+    border: none;
+}
+
+#editButton:hover{
+    background-color: #333333 ;
+}
+
+#editButton:hover img {
+    content: url("/frondend/assets/Svgs/pencil-hover.svg");
 }

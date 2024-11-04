@@ -25,10 +25,11 @@
         </a>
       </div>
       <ul class="nav-links">
-        <li id="singIn"><a href="home.html">Home</a></li>
-        <li id="singIn"><a href="library.html">Library</a></li>
-        <li id="singIn"><a href="wishlist.html">wishlist</a></li>
+        <li class="navLink"><a href="home.html">Home</a></li>
+        <li class="navLink"><a href="library.html">Library</a></li>
+        <li class="navLink"><a href="wishlist.html" class="active">Wishlist</a></li>
       </ul>
+      
       <div class="menu">
         <div class="divUserName">
           <a href="../pages/profile.html" id="userNameNav"></a>
@@ -49,7 +50,6 @@
         <hr />
         <div id="userInfo"></div>
         <hr />
-
         <div id="divEnd">
           <div id="divPerfilButton">
             <button id="exitButton" onclick="logout()">EXIT TO PROFILE</button>
@@ -61,8 +61,8 @@
       </div>
     </section>
     <main id="cards"></main>
-    <div id="infoCards">
-    </div>
+    <div id="infoCards"></div>
+   
     <div id="divNewActivity">
       <button onclick="newActivityButton()" id="newActivityButton">
         NEW WISH
@@ -93,9 +93,10 @@
         </form>
       </div>
     </div>
+
+    
   </body>
 
   <script src="../components/js/nemudeploy.js"></script>
   <script src="/frondend/scripts/wishlist.js"></script>
-  <!-- <script src="/frondend/scripts/funtion.js"></script> -->
 </html>

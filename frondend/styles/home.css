@@ -29,17 +29,19 @@ body {
   display: flex;
   align-items: center; /* Alinea verticalmente al centro */
   text-align: center; /* Asegura que el texto dentro se centre */
+  margin: 10px;
 }
 
 .buttonRedirect {
+  font-size: 20px;
   cursor: pointer;
   background-color: #10cfc3;
   border: none;
   border-radius: 5px;
   margin-top: 20px;
   box-shadow: 2px 2px 10px 5px rgba(0, 0, 0, 0.2);
-  width: 150px;
-  height: 26px;
+  width: 175px;
+  height: 40px;
 }
 
 .buttonRedirect:hover {

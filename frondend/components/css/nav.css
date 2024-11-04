@@ -1,10 +1,4 @@
-* {
-    padding: 0;
-    margin: 0;
-    font-family: "Noto Sans Mono", monospace;
-}
-
-/*NAV*/
+/* NAV */
 .nav {
     z-index: 3;
     display: flex;
@@ -38,15 +32,21 @@
     cursor: pointer;
 }
 
-.nav-links :hover {
+/* Hover effect */
+.nav-links a:hover {
     color: var(--hover-color);
+}
+
+.nav-links a.active {
+    color: var(--hover-color); /* Color personalizado para el enlace activo */
 }
 
 #next-games {
     margin-right: 120px;
 }
 
-.menu{
+/* Menu */
+.menu {
     display: flex;
 }
 
@@ -72,6 +72,6 @@
     padding-right: 8px;
 }
 
-.divUserName{
+.divUserName {
     display: flex;
 }

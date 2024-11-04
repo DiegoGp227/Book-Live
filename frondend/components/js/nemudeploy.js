@@ -33,6 +33,16 @@ function newActivityButton() {
     toggleMenu("menuForm");
 }
 
+function editActivityButton() {
+    const menuForm = document.getElementById("menuForm");
+    const infoCards = document.getElementById("infoCards");
+
+    if (menuForm.style.display === "none" || menuForm.style.display === "") {
+        menuForm.style.display = "flex";
+        infoCards.style.display = "none";
+    }
+};
+
 // Evento para cerrar los menús al hacer clic fuera de ellos
 document.addEventListener("click", function (e) {
     const expandableProfile = document.getElementById("expandableProfile");
