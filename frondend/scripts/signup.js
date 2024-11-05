@@ -10,7 +10,7 @@ async function getDataSignUp() {
         email: email,
         password: password
     };
-    await sendDataSignUp(dataUserObject); 
+    await sendDataSignUp(dataUserObject);
 }
 
 // send data 
@@ -20,9 +20,13 @@ async function sendDataSignUp(dataUserObject) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(dataUserObject)
-    });
-    const result = await response.json();
+        body: JSON.stringify(dataUserObject),
+        credentials: 'include'
+    }).then(response => {
+        if(response.status === 201){
+            window.location.href = '../pages/home.html';
+        }
+    })
 }
 
 let buttonSendData = document.getElementById("buttonSendData")

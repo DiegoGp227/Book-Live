@@ -1,59 +1,83 @@
 import bcryptjs from "bcryptjs";
 import { db } from "../db/db.js";
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv'; 
 
+dotenv.config(); 
+
+const SECRET_KEY = process.env.SECRET_KEY; 
+const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION; 
 
 const signup = async (req, res) => {
-    const connection = await db;
+    try {
+        const connection = await db; // Asegúrate de que esto esté funcionando correctamente
 
-    const { username, email, password } = req.body;
-    if (!username || !email || !password) {
-        return res.status(400).send({
-            message: "Some field is missing."
-        });
-    }
-    
-    const query = 'SELECT * FROM users WHERE email = ?';
-    connection.execute(query, [email], async (err, results) => {
-        if (err) {
-            console.error('Error en la consulta:', err);
-            return res.status(500).send({
-                message: 'Internal server error.',
+        const { username, email, password } = req.body;
+        if (!username || !email || !password) {
+            return res.status(400).send({
+                message: "Some field is missing."
             });
         }
 
+        console.log('Consultando usuario con email:', email);
+        const [results] = await connection.execute('SELECT * FROM users WHERE email = ?', [email]);
+
         if (results.length > 0) {
             console.log("El usuario ya existe");
-            return res.status(202).send({
+            return res.status(409).send({
                 message: "User already exists.",
             });
         }
 
-        try {
-            const salt = await bcryptjs.genSalt(10);
-            const hashedPassword = await bcryptjs.hash(password, salt);
-            console.log('Contraseña encriptada');
+        const salt = await bcryptjs.genSalt(10);
+        const hashedPassword = await bcryptjs.hash(password, salt);
+        console.log('Contraseña encriptada');
 
-            const insertQuery = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
-            db.query(insertQuery, [username, email, hashedPassword], (err, results) => {
-                if (err) {
-                    console.error('Error inserting user:', err);
-                    return res.status(500).send({
-                        message: 'Internal server error.',
-                    });
-                }
-                console.log('Usuario creado exitosamente con ID:', results.insertId);
-                return res.status(201).send({
-                    message: 'User successfully created.',
-                    userId: results.insertId,
-                });
-            });
-        } catch (error) {
-            console.error('Error encrypting password:', error);
-            return res.status(500).send({
-                message: 'Internal server error.',
-            });
-        }
-    });
+        const insertQuery = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?)';
+        const [insertResult] = await connection.execute(insertQuery, [username, email, hashedPassword]);
+
+        console.log('Usuario creado exitosamente con ID:', insertResult.insertId);
+
+        // Generar el token al crear el usuario
+        const token = jwt.sign({ id: insertResult.insertId, email: email }, SECRET_KEY, { expiresIn: TOKEN_EXPIRATION });
+
+        // Establecer cookies
+        res.cookie('token', token, {
+            httpOnly: false, // Cambiar a true para mayor seguridad
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 14400000 // 4 horas en milisegundos
+        });
+
+        res.cookie('userId', insertResult.insertId, {
+            httpOnly: false, // Cambiar a true para mayor seguridad
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 14400000 // 4 horas en milisegundos
+        });
+
+        res.cookie('userName', username, {
+            httpOnly: false, // Cambiar a true para mayor seguridad
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 14400000 // 4 horas en milisegundos
+        });
+
+        res.cookie('userEmail', email, {
+            httpOnly: false, // Cambiar a true para mayor seguridad
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 14400000 // 4 horas en milisegundos
+        });
+
+        return res.status(201).json({
+            message: 'User successfully created.',
+            userId: insertResult.insertId,
+            token // Devolvemos el token si es necesario
+        });
+
+    } catch (error) {
+        console.error('Error en la operación:', error);
+        return res.status(500).send({
+            message: 'Internal server error.',
+        });
+    }
 };
 
 export default signup;

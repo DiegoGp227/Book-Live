@@ -12,8 +12,8 @@ import { postToken } from '../controllers/tokenvalidation.controllers.js';
 const router = Router();
 
 // Routes Auth
-router.post('/login',  login);
-router.post('/signup',  signup);
+router.post('/login', login);
+router.post('/signup', signup);
 
 // Other Router
 router.get('/mybooks', getMyBooks);

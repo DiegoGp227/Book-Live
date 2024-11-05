@@ -22,7 +22,6 @@ const getCountingData = async (req, res) => {
 
 
         if (!dataBooks || dataBooks.length === 0) {
-            console.log("No se encontraron libros para este usuario.");
         } else {
             contBook = dataBooks.length
         }
@@ -31,7 +30,6 @@ const getCountingData = async (req, res) => {
         const [dataWishlist] = await db.query(queryWishlist, [userId]);
 
         if (!dataWishlist || dataWishlist.length === 0) {
-            console.log("No se encontraron libros para este usuario.");
         } else {
             contWishlist = dataWishlist.length
         }
