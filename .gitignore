@@ -1,0 +1,41 @@
+# Dependencias de Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Archivos de entorno y configuración
+.env
+
+# Logs y depuración
+logs/
+*.log
+*.sqlite
+*.sqlite3
+
+# Archivos de compilación o distribución
+dist/
+build/
+
+# Archivos de cache y sistema
+.DS_Store
+Thumbs.db
+
+# Configuración de editores
+.vscode/
+.idea/
+
+# Otros archivos temporales
+*.tmp
+*.lock
+*.pid
+*.seed
+*.pid.lock
+
+# Carpetas de coverage (pruebas)
+coverage/
+
+# Configuración de entorno de producción
+.env.production
+
+# Archivos de configuración de Docker (si no se desean versionar)
+docker-compose.override.yml

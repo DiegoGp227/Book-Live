@@ -2,6 +2,13 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import pageRoutes from '../routes/index.routes.js';
+import dotenv from 'dotenv'; 
+
+dotenv.config(); 
+
+
+
+const PORT = process.env.PORT; 
 
 // Configuration
 const app = express();
@@ -26,6 +33,5 @@ app.use((req, res, next) => {
 });
 
 // Server running
-const port = 5000
-app.listen(port);
-console.log(`Hello world, i am listening on port ${port}`);
+app.listen(PORT);
+console.log(`Hello world, i am listening on port ${PORT}`);
