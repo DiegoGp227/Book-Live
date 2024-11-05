@@ -69,11 +69,11 @@
       </button>
     </div>
     <div id="menuForm">
-      <div id="formTitle">
+      <div class="formTitle">
         <h2>NEW DESIRED BOOK</h2>
       </div>
-      <div id="formMain">
-        <form id="formActivity">
+      <div class="formMain">
+        <form class="formActivity">
           <label for="bookName">Book Name</label>
           <input type="text" id="bookName" required />
 
@@ -94,7 +94,31 @@
       </div>
     </div>
 
-    
+    <div id="menuEdit">
+      <div class="formTitle">
+        <h2>UPDATE INFORMATION</h2>
+      </div>
+      <div class="formMain">
+        <form class="formActivityEdit">
+          <label for="bookName">Book Name</label>
+          <input type="text" id="bookNameEdit" required />
+
+          <label for="bookAuthor">Author</label>
+          <input type="text" id="bookAuthorEdit" required />
+
+          <label for="bookimg">Url img</label>
+          <input type="text" id="bookimgEdit" required />
+
+          <label for="bookPrice">Price</label>
+          <input type="text" id="bookPriceEdit" required />
+
+          <label for="bookLink">Link</label>
+          <input type="text" id="bookLinkEdit" required />
+
+          <button type="submit" id="sendButtomEdit">Send</button>
+        </form>
+      </div>
+    </div>
   </body>
 
   <script src="../components/js/nemudeploy.js"></script>

@@ -67,11 +67,11 @@
       </button>
     </div>
     <div id="menuForm">
-      <div id="formTitle">
+      <div class="formTitle">
         <h2>NEW BOOK</h2>
       </div>
-      <div id="formMain">
-        <form id="formActivity">
+      <div class="formMain">
+        <form class="formActivity">
           <label for="bookName">Book Name</label>
           <input type="text" id="bookName" required />
 
@@ -91,6 +91,35 @@
           <input type="text" id="bookDescription" required />
 
           <button type="submit" id="sendButtomForm">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="menuEdit">
+      <div class="formTitle">
+        <h2>UPDATE INFORMATION</h2>
+      </div>
+       <div class="formMain">
+        <form class="formActivity">
+          <label for="bookName">Book Name</label>
+          <input type="text" id="bookNameEdit" required />
+
+          <label for="bookAuthor">Author</label>
+          <input type="text" id="bookAuthorEdit" required />
+
+          <label for="bookCalification">Calification</label>
+          <input type="number" id="bookCalificationEdit" required />
+
+          <label for="bookimg">Url img</label>
+          <input type="text" id="bookimgEdit" required />
+
+          <label for="bookCategory">Category</label>
+          <input type="text" id="bookCategoryEdit" required />
+
+          <label for="bookDescription">Description</label>
+          <input type="text" id="bookDescriptionEdit" required />
+
+          <button type="submit" id="sendButtomEdit">Send</button>
         </form>
       </div>
     </div>

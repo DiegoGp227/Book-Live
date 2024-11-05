@@ -1,5 +1,8 @@
 //// Push
-let cardsBooks
+let cardsBooks;
+let dataCardsGlobal;
+let selectedCardId = null;
+let selectedBookId = null;
 
 function getCookieValue(name) {
     const value = `; ${document.cookie}`;
@@ -37,8 +40,10 @@ function getBooks() {
 function addCardsBooks(cardsBooks) {
     let cards = document.getElementById("cards")
     let cardId = 0;
+    let idBook
     cards.innerHTML = "";
     cardsBooks.forEach(item => {
+        idBook = item.id
         cards.innerHTML += `
         <div class="target">
             <div class="img-target">
@@ -48,15 +53,17 @@ function addCardsBooks(cardsBooks) {
                 <h3>${item.title}</h3>
                 <h3>${item.author}</h3>
             </div>
-            <button id="moreInfoButton" class="openMoreInfo" onclick="openMoreInfo(), insertInfo(${cardId});">MORE INFO</button>
+                <button id="moreInfoButton" class="openMoreInfo" onclick="openMoreInfo(), insertInfo(${cardId},${idBook});">MORE INFO</button>
         </div>
     `
         cardId++;
     })
 }
 
-function insertInfo(id) {
+function insertInfo(id, idBook) {
     let infoCards = document.getElementById("infoCards");
+    selectedCardId = id;
+    selectedBookId = idBook;
     infoCards.innerHTML = "";
     infoCards.innerHTML += `
         <div id="infoCardsTittle">
@@ -70,7 +77,7 @@ function insertInfo(id) {
         </div>
         <div class="buttonsMoreInfo">
             <button id="deleteButton" onclick="deleteCard(${cardsBooks[id].id})">DELETE</button>
-            <button id="editButton">
+            <button id="editButton" onclick="editActivityButton()">
                 <img id="editButtonImg" src="../assets/Svgs/pencil.svg" alt="">
             </button>
         </div>
@@ -78,24 +85,24 @@ function insertInfo(id) {
 }
 
 function deleteCard(id) {
-    fetch (`http://localhost:5000/api/mybooks/${id}`, {
+    fetch(`http://localhost:5000/api/mybooks/${id}`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
         },
-    })  .then(response => {
+    }).then(response => {
         if (!response.ok) {
             throw new Error("Error al eliminar la actividad");
         }
         return response.json();
     })
-    .then(data => {
-        console.log("Actividad eliminada:", data); 
-        window.location.reload()      
-    })
-    .catch(error => {
-        console.error("Error al intentar eliminar la actividad:", error);
-    });
+        .then(data => {
+            console.log("Actividad eliminada:", data);
+            window.location.reload()
+        })
+        .catch(error => {
+            console.error("Error al intentar eliminar la actividad:", error);
+        });
 }
 
 
@@ -108,7 +115,6 @@ function getDatesForm() {
     const bookCategory = document.getElementById("bookCategory").value;
     const bookDescription = document.getElementById("bookDescription").value;
     const userId = getCookieValue('userId');
-    console.log("dghfhgj")
     const dataObjet = {
         userid: userId,
         bookName: bookName,
@@ -134,8 +140,60 @@ function sendDatesForm(dataObjet) {
 
 const sendButtomForm = document.getElementById("sendButtomForm");
 
-sendButtomForm.addEventListener("click", async (event) => {
-    getDatesForm(event);
+sendButtomForm.addEventListener("click", async () => {
+    getDatesForm();
+});
+
+function getDatesFormEdit(id) { // Recibe `id` como parámetro
+    const bookName = document.getElementById("bookNameEdit").value;
+    const bookAuthor = document.getElementById("bookAuthorEdit").value;
+    const bookCalification = document.getElementById("bookCalificationEdit").value;
+    const bookimg = document.getElementById("bookimgEdit").value;
+    const bookCategory = document.getElementById("bookCategoryEdit").value;
+    const bookDescription = document.getElementById("bookDescriptionEdit").value;
+    const userId = getCookieValue('userId');
+    const dataObjetEdit = {
+        userid: userId,
+        bookName: bookName,
+        bookAuthor: bookAuthor,
+        bookCalification: bookCalification,
+        bookimg: bookimg,
+        bookCategory: bookCategory,
+        bookDescription: bookDescription,
+    }
+    editCard(id, dataObjetEdit);
+}
+
+//// Edit card
+function editCard(id, dataObjetEdit) { 
+    console.log(dataObjetEdit);
+    fetch(`http://localhost:5000/api/mybooks/${id}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataObjetEdit)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error al actualizar la actividad");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Actividad actualizada:", data);
+            window.location.reload(); // Recarga la página para ver los cambios
+        })
+        .catch(error => {
+            console.error("Error al intentar actualizar la actividad:", error);
+        });
+}
+
+const sendButtomEdit = document.getElementById("sendButtomEdit");
+sendButtomEdit.addEventListener("click", async () => {
+    alert(selectedBookId)
+
+    getDatesFormEdit(selectedBookId);
 });
 
 

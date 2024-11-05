@@ -54,6 +54,35 @@ const postMyBooks = async (req, res) => {
     }
 }
 
+const putMyBooks = async (req, res) => {
+    try {
+        const bookId = req.params.id;
+        const { userid, bookName, bookAuthor, bookCalification, bookimg, bookCategory, bookDescription } = req.body;
+        const result = await db.query(
+            "UPDATE books SET user_id = ?, title = ?, author = ?, cover_image = ?, rating = ?, category = ?, description = ? WHERE id = ?", 
+            [userid, bookName, bookAuthor, bookimg, bookCalification, bookCategory, bookDescription, bookId ]
+        );
+
+        user_id, title, author, cover_image, rating, category, description
+        db.connect((error) => {
+            if (error) {
+                console.error('Error de conexión:', error);
+                return;
+            }
+            console.log('Conectado a la base de datos');
+        });
+        return res.status(201).json({
+            message: "Book added successfully",
+            bookId: result.insertId,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "something went wrong", error: error
+            
+        })
+    }
+};
+
 const deleteMyBooks = async (req, res) => {
     try {
         const bookId = req.params.id;
@@ -75,4 +104,4 @@ const deleteMyBooks = async (req, res) => {
 }
 
 
-export { getMyBooks, postMyBooks, deleteMyBooks };
+export { getMyBooks, postMyBooks, putMyBooks, deleteMyBooks };

@@ -1,6 +1,9 @@
 // Get the wish list book cards
 let cardsBooks;
 let dataCardsGlobal;
+let selectedCardId = null;
+let selectedBookId = null;
+
 
 function getWishlist() {
     const userId = getCookieValue('userId');
@@ -35,9 +38,11 @@ function getCookieValue(name) {
 ////Add menuInfo
 function addCardsWishlist(cardsBooks) {
     let cards = document.getElementById("cards");
-    let cardId = 0
+    let cardId = 0;
+    let idBook 
     cards.innerHTML = "";
     cardsBooks.forEach((item) => {
+        idBook = item.id
         cards.innerHTML += `
         <div class="target" data-cardId="${cardId}">
             <div class="img-target">
@@ -47,16 +52,17 @@ function addCardsWishlist(cardsBooks) {
                 <h3>${item.name}</h3>
                 <h3>${item.author}</h3>
             </div>
-            <button id="moreInfoButton" class="openMoreInfo" onclick="openMoreInfo(), insertInfo(${cardId});">MORE INFO</button>
+            <button id="moreInfoButton" class="openMoreInfo" onclick="openMoreInfo(), insertInfo(${cardId},${idBook});">MORE INFO</button>
         </div>
         `;
         cardId++;
     });
 }
 
-
-function insertInfo(id) {
+function insertInfo(id,idBook) {
     let infoCards = document.getElementById("infoCards");
+    selectedCardId = id;
+    selectedBookId = idBook;
     infoCards.innerHTML = "";
     infoCards.innerHTML += `
     <div id="infoCardsTittle">
@@ -83,26 +89,25 @@ function insertInfo(id) {
 }
 
 function deleteCard(id) {
-    fetch (`http://localhost:5000/api/mywishlist/${id}`, {
+    fetch(`http://localhost:5000/api/mywishlist/${id}`, {
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
         },
-    })  .then(response => {
+    }).then(response => {
         if (!response.ok) {
             throw new Error("Error al eliminar la actividad");
         }
         return response.json();
     })
-    .then(data => {
-        console.log("Actividad eliminada:", data); 
-        window.location.reload()      
-    })
-    .catch(error => {
-        console.error("Error al intentar eliminar la actividad:", error);
-    });
+        .then(data => {
+            console.log("Actividad eliminada:", data);
+            window.location.reload()
+        })
+        .catch(error => {
+            console.error("Error al intentar eliminar la actividad:", error);
+        });
 }
-
 //// Add new cards
 function getDatesForm() {
     const bookName = document.getElementById("bookName").value;
@@ -134,9 +139,58 @@ function sendDatesForm(dataObjet) {
 
 const sendButtomForm = document.getElementById("sendButtomForm");
 
-sendButtomForm.addEventListener("click", async (event) => {
-    getDatesForm(event);
+sendButtomForm.addEventListener("click", async () => {
+    getDatesForm();
 });
+
+function getDatesFormEdit(id) { // Recibe `id` como parámetro
+    const bookName = document.getElementById("bookNameEdit").value;
+    const bookAuthor = document.getElementById("bookAuthorEdit").value;
+    const bookimg = document.getElementById("bookimgEdit").value;
+    const bookPrice = document.getElementById("bookPriceEdit").value;
+    const bookLink = document.getElementById("bookLinkEdit").value;
+    const userId = getCookieValue('userId');
+    const dataObjetEdit = {
+        userid: userId,
+        bookName: bookName,
+        bookAuthor: bookAuthor,
+        bookimg: bookimg,
+        bookPrice: bookPrice,
+        bookLink: bookLink,
+    }
+    editCard(id, dataObjetEdit); // Pasa `id` y `dataObjet` a `editCard`
+}
+
+//// Edit card
+function editCard(id, dataObjetEdit) { // Recibe `id` y `dataObjetEdit` como parámetros
+    console.log(dataObjetEdit); 
+    fetch(`http://localhost:5000/api/mywishlist/${id}`, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataObjetEdit)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error al actualizar la actividad");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Actividad actualizada:", data);
+        window.location.reload(); // Recarga la página para ver los cambios
+    })
+    .catch(error => {
+        console.error("Error al intentar actualizar la actividad:", error);
+    });
+}
+
+const sendButtomEdit = document.getElementById("sendButtomEdit");
+sendButtomEdit.addEventListener("click", async () => {
+    getDatesFormEdit(selectedBookId); 
+});
+
 
 //// Add userName 
 function getCookieValue(name) {

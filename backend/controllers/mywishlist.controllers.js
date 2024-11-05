@@ -47,10 +47,38 @@ const postWishlist = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             message: "something went wrong", error: error
-
+            
         })
     }
 }
+
+const putWishlist = async (req, res) => {
+    try {
+        const bookId = req.params.id;
+        const { userid, bookName, bookAuthor, bookimg, bookPrice, bookLink } = req.body;
+        const result = await db.query(
+            "UPDATE wishlist SET user_id = ?, name = ?, author = ?, cover_image = ?, price = ?, link = ? WHERE id = ?", 
+            [userid, bookName, bookAuthor, bookimg, bookPrice, bookLink, bookId]
+        );
+        db.connect((error) => {
+            if (error) {
+                console.error('Error de conexión:', error);
+                return;
+            }
+            console.log('Conectado a la base de datos');
+        });
+        return res.status(201).json({
+            message: "Book added successfully",
+            bookId: result.insertId,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "something went wrong", error: error
+            
+        })
+    }
+}
+
 
 const deleteMyWishlist = async (req, res) =>{
     try {
@@ -72,4 +100,5 @@ const deleteMyWishlist = async (req, res) =>{
     }
 }
 
-export { getMyWishlist, postWishlist, deleteMyWishlist };
+
+export { getMyWishlist, postWishlist, putWishlist, deleteMyWishlist };
